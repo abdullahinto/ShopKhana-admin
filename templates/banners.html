@@ -1,0 +1,122 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/banners.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/banners.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Banners Management - ShopKhana{% endblock title %}
+
+
+{% block body %}
+
+
+
+
+<!-- Header with Page Title and +New Banner Button -->
+<header class="sk-ban-header">
+    <h1>Banners Management</h1>
+    <button id="sk-ban-new-btn" class="sk-ban-btn">+ New Banner</button>
+</header>
+
+<!-- Search & Filter Section -->
+<section class="sk-ban-search-filter">
+    <input type="text" id="sk-ban-search" placeholder="Search by Banner ID or Banner Name">
+    <select id="sk-ban-type-filter">
+        <option value="">All Categories</option>
+        <option value="promotion">Promotion Category</option>
+        <option value="product">Product Category</option>
+    </select>
+
+    <button id="sk-ban-bulk-delete" class="sk-ban-btn sk-ban-bulk-delete">Delete Selected</button>
+</section>
+
+<!-- Banners Table Section -->
+<section class="sk-ban-table-section">
+    <div class="sk-ban-table-container">
+        <table id="sk-ban-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="sk-ban-select-all"></th>
+                    <th>Banner ID</th>
+                    <th>Banner Name</th>
+                    <th id="sk-ban-category-header">Category</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="sk-ban-table-body">
+          
+                <!-- Banner rows will be rendered dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination -->
+    <div class="sk-ban-pagination" id="sk-ban-pagination">
+        <!-- Pagination controls go here -->
+    </div>
+</section>
+
+<!-- Banner Modal Popup (for Add/Edit) -->
+<div id="sk-ban-modal" class="sk-ban-modal">
+    <div class="sk-ban-modal-content">
+        <span class="sk-ban-modal-close">&times;</span>
+        <h2 class="sk-ban-modal-heading">Add / Edit Banner</h2>
+        <form id="sk-ban-form">
+            <div class="sk-ban-form-grid">
+                <!-- Banner Name Input -->
+                <div class="sk-ban-form-group">
+                    <label for="sk-ban-name">Banner Name</label>
+                    <input type="text" id="sk-ban-name" required>
+                </div>
+                <!-- Promotion Category Dropdown -->
+                <div class="sk-ban-form-group">
+                    <label for="sk-ban-promotion">Promotion Category</label>
+                    <select id="sk-ban-promotion">
+                        <option value="">Select Promotion</option>
+                        <option value="Flash Sale">Flash Sale</option>
+                        <option value="Best Buy">Best Buy</option>
+                        <option value="New Arrivals">New Arrivals</option>
+                        <option value="Gift Deals">Gift Deals</option>
+                    </select>
+                </div>
+                <!-- Product Category Dropdown -->
+                <div class="sk-ban-form-group">
+                    <label for="sk-ban-product">Product Category</label>
+                    <select id="sk-ban-product">
+                        <option value="">Select Product Category</option>
+                        <!-- These options should be dynamically populated from categories -->
+                    </select>
+                </div>
+                <!-- Instruction: Only one of the above two dropdowns should be selected -->
+                <div class="sk-ban-form-group sk-ban-full">
+                    <small class="sk-ban-instruction">
+                        * Please select either a Promotion Category OR a Product Category, not both.
+                    </small>
+                </div>
+                <!-- Upload Banner Image Section -->
+                <div class="sk-ban-form-group sk-ban-full">
+                    <label for="sk-ban-image">Upload Banner Image</label>
+                    <input type="file" id="sk-ban-image" accept="image/*" required>
+                    <div id="sk-ban-image-preview" class="sk-ban-image-preview"></div>
+                </div>
+            </div>
+            <button type="submit" class="sk-ban-btn sk-ban-submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Image Popup Modal for Banner Image -->
+<div id="sk-ban-img-popup" class="sk-ban-img-popup">
+    <div class="sk-ban-img-popup-content">
+        <span class="sk-ban-img-popup-close">&times;</span>
+        <div id="sk-ban-img-popup-gallery" class="sk-ban-img-popup-gallery"></div>
+    </div>
+</div>
+
+
+{% endblock body %}

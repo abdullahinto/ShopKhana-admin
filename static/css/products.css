@@ -1,0 +1,402 @@
+/* ==========================
+   SK-PROD: Admin Product Management
+   ========================== */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfbf6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-prod-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.sk-prod-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+.sk-prod-new-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-prod-new-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+/* Search & Filter Section */
+.sk-prod-search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.sk-prod-search-filter input[type="text"] {
+  padding: 8px;
+  font-size: 14px;
+  flex: 1;
+  min-width: 200px;
+}
+.sk-prod-search-filter select {
+  padding: 8px;
+  font-size: 14px;
+}
+.sk-prod-bulk-delete {
+  background-color: #ff4848;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.sk-prod-bulk-delete:hover {
+  background-color: #dc3545;
+}
+.sk-prod-item-count {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Products Table Section */
+.sk-prod-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-prod-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-prod-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-prod-table th,
+#sk-prod-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+#sk-prod-table th {
+  background-color: #f9f9f9;
+}
+#sk-prod-table td {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pagination Container */
+#sk-prod-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+/* Page Navigation Buttons */
+#sk-prod-pagination button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+#sk-prod-pagination button:hover:not(:disabled) {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+#sk-prod-pagination button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f8f8f8;
+}
+
+/* Page Information Text */
+#pageInfo {
+  margin: 0 10px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  #sk-prod-pagination {
+    gap: 10px;
+  }
+
+  #sk-prod-pagination button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+/* Modal (Product Input Popup) */
+.sk-prod-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.sk-prod-modal-content {
+  background-color: #fff;
+  border: 2px solid orange;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  position: relative;
+  animation: skProdModalSlideIn 0.7s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+@keyframes skProdModalSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sk-prod-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-prod-modal-heading {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Modal Form Grid: Two-column layout */
+.sk-prod-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+.sk-prod-form-group {
+  display: flex;
+  flex-direction: column;
+}
+.sk-prod-form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.sk-prod-form-group input,
+.sk-prod-form-group textarea,
+.sk-prod-form-group select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.sk-prod-form-group.sk-prod-full {
+  grid-column: span 2;
+}
+
+/* Tag Input for Colors */
+.sk-prod-colors-tags {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sk-prod-colors-tag {
+  background-color: #ffe4b3;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sk-prod-colors-tag i {
+  cursor: pointer;
+}
+
+/* Image Upload Preview */
+.sk-prod-images-preview {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sk-prod-images-preview img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Submit Button in Modal */
+.sk-prod-submit-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  margin-top: 20px;
+  grid-column: span 2;
+}
+.sk-prod-submit-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+/* Image Popup Modal */
+.sk-prod-img-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+.sk-prod-img-popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+.sk-prod-img-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-prod-img-popup-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.sk-prod-img-popup-gallery img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+
+/* Styling for the edit button */
+.sk-prod-edit-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+}
+
+/* Styling for the delete button */
+.sk-prod-delete-btn {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+/* Styling for the show button */
+.sk-prod-show-btn {
+  background-color: #008CBA; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+}
+
+
+
+/* Additional Info Tag Styles */
+.sk-prod-additional-info-tags {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sk-prod-additional-info-tag {
+  background-color: #e0f7fa;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sk-prod-additional-info-tag i {
+  cursor: pointer;
+}
+

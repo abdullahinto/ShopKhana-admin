@@ -1,0 +1,211 @@
+/* ================================
+   SK-FAQ: Admin FAQs Management
+   ================================ */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfbf6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-faq-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sk-faq-header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+/* Search & Filter Section */
+.sk-faq-search-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+.sk-faq-search-filter input[type="text"] {
+  padding: 8px;
+  font-size: 14px;
+  flex: 1;
+  max-width: 300px;
+}
+.sk-faq-search-filter select {
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* FAQs Table Section */
+.sk-faq-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-faq-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-faq-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-faq-table th,
+#sk-faq-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+#sk-faq-table th {
+  background-color: #f9f9f9;
+}
+#sk-faq-table td a {
+  color: #0077b6;
+  text-decoration: none;
+}
+#sk-faq-table td a:hover {
+  text-decoration: underline;
+}
+
+/* FAQ Answer Modal */
+.sk-faq-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.sk-faq-modal-content {
+  background-color: #fff;
+  border: 2px solid orange;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+  animation: faqModalSlideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+@keyframes faqModalSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sk-faq-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-faq-modal-heading {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.sk-faq-form-group {
+  margin-bottom: 15px;
+}
+.sk-faq-form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.sk-faq-form-group textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+.sk-faq-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-faq-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+
+
+.sk-faq-edit-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sk-faq-edit-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+
+.sk-faq-delete-btn {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sk-faq-delete-btn:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+.sk-faq-answer-btn {
+  background-color: #2196F3; /* Blue background */
+  color: white; /* White text */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sk-faq-answer-btn:hover {
+  background-color: #1e88e5; /* Darker blue on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}

@@ -1,0 +1,319 @@
+/* =============================
+   SK-BAN: Banners Management Page
+   ============================= */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfbf6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-ban-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.sk-ban-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+.sk-ban-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-ban-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+/* Search & Filter Section */
+.sk-ban-search-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+.sk-ban-search-filter input[type="text"] {
+  padding: 8px;
+  font-size: 14px;
+  flex: 1;
+  max-width: 300px;
+}
+.sk-ban-search-filter select {
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Table Section */
+.sk-ban-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-ban-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-ban-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-ban-table th,
+#sk-ban-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+#sk-ban-table th {
+  background-color: #f9f9f9;
+}
+
+/* The category header changes dynamically if needed.
+     For now, we assume its default text is "Category" */
+#sk-ban-category-header {
+  text-transform: capitalize;
+}
+
+/* Pagination */
+.sk-ban-pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+.sk-ban-pagination a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #0077b6;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.3s;
+}
+.sk-ban-pagination a:hover {
+  background-color: #ffe4b3;
+}
+.sk-ban-pagination a.active {
+  background-color: orange;
+  color: #fff;
+  border-color: orange;
+}
+
+/* Modal for Adding/Editing Banner */
+.sk-ban-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.sk-ban-modal-content {
+  background-color: #fff;
+  border: 2px solid orange;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+  animation: skBanModalSlideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+@keyframes skBanModalSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sk-ban-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-ban-modal-heading {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Modal Form Grid */
+.sk-ban-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.sk-ban-form-group {
+  display: flex;
+  flex-direction: column;
+}
+.sk-ban-form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.sk-ban-form-group input,
+.sk-ban-form-group select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.sk-ban-form-group.sk-ban-full {
+  grid-column: span 2;
+}
+.sk-ban-instruction {
+  font-size: 12px;
+  color: #555;
+}
+
+/* Image Upload Preview in Modal */
+.sk-ban-image-preview {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sk-ban-image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+
+}
+
+/* Image Popup Modal for Banner */
+.sk-ban-img-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+.sk-ban-img-popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+.sk-ban-img-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-ban-img-popup-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.sk-ban-img-popup-gallery img {
+  max-width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+
+.sk-ban-row-checkbox {
+  display: inline-block !important;
+}
+
+
+
+.sk-ban-edit-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.sk-ban-edit-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+.sk-ban-delete-btn {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-left: 10px;
+}
+
+.sk-ban-delete-btn:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+/* Styling for the show button */
+.sk-ban-show-btn {
+  background-color: #008CBA; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+}
+
+
+
+.sk-ban-show-btn:hover {
+  background-color: blue; /* Darker red on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+

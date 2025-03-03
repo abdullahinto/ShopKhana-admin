@@ -1,0 +1,164 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/products.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Product Management - ShopKhana{% endblock title %}
+
+{% block body %}
+
+
+<!-- Header -->
+<header class="sk-prod-header">
+    <h1>Product Management</h1>
+    <button id="sk-prod-new-btn" class="sk-prod-btn sk-prod-new-btn">+ New Product</button>
+</header>
+
+<!-- Search & Filter Section -->
+<section class="sk-prod-search-filter">
+    <input type="text" id="sk-prod-search" placeholder="Search by name or _id">
+    <select id="sk-prod-category-filter">
+        <option value="">All Categories</option>
+        <option value="fashion">Fashion</option>
+        <option value="jewelry">Jewelry</option>
+        <option value="handbags">Handbags</option>
+    </select>
+    <select id="sk-prod-promotion-filter">
+        <option value="">All Promotions</option>
+        <option value="best buy">Best Buy</option>
+        <option value="flash sale">Flash Sale</option>
+        <option value="new arrivals">New Arrivals</option>
+        <option value="gift deals">Gift Deals</option>
+    </select>
+    <select id="sk-prod-brand-filter">
+        <option value="">All Brands</option>
+        <option value="louis-vuitton">Louis Vuitton</option>
+        <option value="gucci">Gucci</option>
+    </select>
+    <button id="sk-prod-bulk-delete" class="sk-prod-btn sk-prod-bulk-delete">Delete Selected</button>
+    <span id="sk-prod-item-count" class="sk-prod-item-count">Total Products: 0</span>
+</section>
+
+<!-- Products Table Section -->
+<section class="sk-prod-table-section">
+    <div class="sk-prod-table-container">
+        <table id="sk-prod-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="sk-prod-select-all"></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Orig. Price</th>
+                    <th>Discount %</th>
+                    <th>Discounted Price</th>
+                    <th>Colors</th>
+                    <th>Additional-Info</th>
+                    <th>Category</th>
+                    <th>Promotion</th>
+                    <th>Brand</th>
+                    <th>Images</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sk-prod-table-body">
+                <!-- Product rows will be rendered via JS -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Add this pagination container in your HTML where you want the controls -->
+    <div id="sk-prod-pagination" class="pagination">
+        <!-- Pagination controls go here -->
+    </div>
+</section>
+
+<!-- Product Input Modal (Add/Edit) -->
+<div id="sk-prod-modal" class="sk-prod-modal">
+    <div class="sk-prod-modal-content">
+        <span class="sk-prod-modal-close">&times;</span>
+        <h2 class="sk-prod-modal-heading">Add / Edit Product</h2>
+        <form id="sk-prod-form">
+            <div class="sk-prod-form-grid">
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-title">Title</label>
+                    <input type="text" id="sk-prod-title" required>
+                </div>
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-original-price">Original Price</label>
+                    <input type="number" id="sk-prod-original-price" required>
+                </div>
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-discount-percent">Discount Percent</label>
+                    <input type="number" id="sk-prod-discount-percent" required>
+                </div>
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-discounted-price">Discounted Price</label>
+                    <input type="number" id="sk-prod-discounted-price" readonly>
+                </div>
+                <div class="sk-prod-form-group sk-prod-full">
+                    <label for="sk-prod-description">Description</label>
+                    <textarea id="sk-prod-description" required></textarea>
+                </div>
+                <div class="sk-prod-form-group sk-prod-full">
+                    <label for="sk-prod-colors-input">Colors</label>
+                    <input type="text" id="sk-prod-colors-input" placeholder="Type a color and press Enter">
+                    <div id="sk-prod-colors-tags" class="sk-prod-colors-tags"></div>
+                </div>
+
+                <div class="sk-prod-form-group sk-prod-full">
+                    <label for="sk-prod-additional-info-input">Additional Info</label>
+                    <input type="text" id="sk-prod-additional-info-input"
+                        placeholder="Type additional info and press Enter">
+                    <div id="sk-prod-additional-info-tags" class="sk-prod-additional-info-tags"></div>
+                </div>
+
+
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-category">Product Category</label>
+                    <select id="sk-prod-category" required>
+                        <option value="">Select Category</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="jewelry">Jewelry</option>
+                        <option value="handbags">Handbags</option>
+                    </select>
+                </div>
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-promotion">Promotion Category</label>
+                    <select id="sk-prod-promotion" required>
+                        <option value="">Select Promotion</option>
+                        <option value="best buy">Best Buy</option>
+                        <option value="flash sale">Flash Sale</option>
+                        <option value="new arrivals">New Arrivals</option>
+                        <option value="gift deals">Gift Deals</option>
+                    </select>
+                </div>
+                <div class="sk-prod-form-group">
+                    <label for="sk-prod-brand">Brand Name</label>
+                    <input type="text" id="sk-prod-brand" required>
+                </div>
+                <div class="sk-prod-form-group sk-prod-full">
+                    <label for="sk-prod-images">Product Images</label>
+                    <input type="file" id="sk-prod-images" accept="image/*" multiple>
+                    <div id="sk-prod-images-preview" class="sk-prod-images-preview"></div>
+                </div>
+            </div>
+            <button type="submit" class="sk-prod-btn sk-prod-submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Image Popup Modal -->
+<div id="sk-prod-img-popup" class="sk-prod-img-popup">
+    <div class="sk-prod-img-popup-content">
+        <span class="sk-prod-img-popup-close">&times;</span>
+        <div id="sk-prod-img-popup-gallery" class="sk-prod-img-popup-gallery"></div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

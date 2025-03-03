@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/category.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Category Management - ShopKhana{% endblock title %}
+
+{% block body %}
+
+
+
+
+<!-- Header -->
+<header class="sk-cat-header">
+    <h1>Category Management</h1>
+    <button id="sk-cat-new-btn" class="sk-cat-btn sk-cat-new-btn">+ New Category</button>
+</header>
+
+<!-- Search & Filter Section -->
+<section class="sk-cat-search-filter">
+    <input type="text" id="sk-cat-search" placeholder="Search by name or _id">
+    <select id="sk-cat-count-filter">
+        <option value="">All Categories</option>
+        <option value="0-5">0 - 5 Products</option>
+        <option value="6-10">6 - 10 Products</option>
+        <option value="11-20">11 - 20 Products</option>
+        <option value="21">21+ Products</option>
+    </select>
+    <button id="sk-cat-bulk-delete" class="sk-cat-btn sk-cat-bulk-delete">Delete Selected</button>
+    <span id="sk-cat-total-count" class="sk-cat-total-count">Total Categories: 0</span>
+</section>
+
+<!-- Categories Table Section -->
+<section class="sk-cat-table-section">
+    <div class="sk-cat-table-container">
+        <table id="sk-cat-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="sk-cat-select-all"></th>
+                    <th>Title</th>
+                    <th>Images</th>
+                    <th>No. of Products</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sk-cat-table-body">
+                <!-- Category rows will be dynamically rendered here -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination (if needed) -->
+ <div class="sk-cat-pagination" id="sk-cat-pagination">
+        <!-- Pagination controls go here -->
+    </div>   
+</section>
+
+<!-- Category Input Modal -->
+<div id="sk-cat-modal" class="sk-cat-modal">
+    <div class="sk-cat-modal-content">
+        <span class="sk-cat-modal-close">&times;</span>
+        <h2 class="sk-cat-modal-heading">Add / Edit Category</h2>
+        <form id="sk-cat-form">
+            <div class="sk-cat-form-grid">
+                <div class="sk-cat-form-group">
+                    <label for="sk-cat-title">Category Title</label>
+                    <input type="text" id="sk-cat-title" required>
+                </div>
+                <div class="sk-cat-form-group sk-cat-full">
+                    <label for="sk-cat-images">Category Images</label>
+                    <input type="file" id="sk-cat-images" accept="image/*" multiple>
+                    <div id="sk-cat-images-preview" class="sk-cat-images-preview"></div>
+                </div>
+            </div>
+            <button type="submit" class="sk-cat-btn sk-cat-submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Image Popup Modal for Category Images -->
+<div id="sk-cat-img-popup" class="sk-cat-img-popup">
+    <div class="sk-cat-img-popup-content">
+        <span class="sk-cat-img-popup-close">&times;</span>
+        <div id="sk-cat-img-popup-gallery" class="sk-cat-img-popup-gallery"></div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

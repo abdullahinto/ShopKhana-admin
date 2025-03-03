@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/faq.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}FAQs Management - ShopKhana{% endblock title %}
+
+
+{% block body %}
+
+
+
+<!-- Header -->
+<header class="sk-faq-header">
+  <h1>FAQs Management</h1>
+</header>
+
+<!-- Search & Filter Section -->
+<section class="sk-faq-search-filter">
+  <input type="text" id="sk-faq-search" placeholder="Search FAQs by question or product link">
+  <select id="sk-faq-status-filter">
+    <option value="">All Statuses</option>
+    <option value="Answered">Answered</option>
+    <option value="Unanswered">Unanswered</option>
+  </select>
+</section>
+
+<!-- FAQs Table Section -->
+<section class="sk-faq-table-section">
+  <div class="sk-faq-table-container">
+    <table id="sk-faq-table">
+      <thead>
+        <tr>
+          <th>Product Link</th>
+          <th>Question</th>
+          <th>Answer</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="sk-faq-table-body">
+        <!-- FAQ rows will be dynamically rendered here -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FAQ Answer Popup Modal -->
+<div id="sk-faq-modal" class="sk-faq-modal">
+  <div class="sk-faq-modal-content">
+    <span class="sk-faq-modal-close">&times;</span>
+    <h2 class="sk-faq-modal-heading">Answer FAQ</h2>
+    <form id="sk-faq-form">
+      <div class="sk-faq-form-group">
+        <label>Product Link</label>
+        <a id="sk-faq-product-link" href="#" target="_blank"></a>
+      </div>
+      <div class="sk-faq-form-group">
+        <label>Question</label>
+        <textarea id="sk-faq-question" readonly></textarea>
+      </div>
+      <div class="sk-faq-form-group">
+        <label>Answer</label>
+        <textarea id="sk-faq-answer" required></textarea>
+      </div>
+      <button type="submit" class="sk-faq-btn">Submit Answer</button>
+    </form>
+  </div>
+</div>
+
+
+{% endblock body %}

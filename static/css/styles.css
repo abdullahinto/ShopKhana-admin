@@ -1,0 +1,102 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  z-index: 800;
+}
+
+/* Dropdown Button */
+.dropdown-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+  background-color: #45a049;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  overflow: visible; /* Allow sub-dropdowns to overflow */
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Sub-Dropdown Styling */
+.sub-dropdown {
+  position: relative;
+}
+
+.sub-dropdown-button {
+  background-color: transparent;
+  color: #333;
+  padding: 12px 16px;
+  text-align: left;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: capitalize;
+  transition: background-color 0.3s ease;
+}
+
+.sub-dropdown-button:hover {
+  background-color: #f1f1f1;
+}
+
+.sub-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 2; /* Higher z-index than the main dropdown */
+  border-radius: 5px;
+}
+
+.sub-dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.sub-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
