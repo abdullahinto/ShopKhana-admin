@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fee_details.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/fee_details.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Fee Management - ShopKhana{% endblock title %}
+
+{% block body %}
+
+<!-- Header -->
+<header class="fd-header">
+    <h1>Fee Details Management</h1>
+</header>
+
+<!-- Fee Details Table Section -->
+<section class="fd-table-section">
+    <div class="fd-table-container">
+        <table id="fd-table">
+            <thead>
+                <tr>
+                    <th>Delivery Fee (Rs.)</th>
+                    <th>COD Fee (Rs.)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="fd-table-body">
+                <!-- One row will be populated here -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Modal Popup for Editing Fee Details -->
+<div id="fd-modal" class="fd-modal">
+    <div class="fd-modal-content">
+        <span class="fd-modal-close">&times;</span>
+        <h2>Edit Fee Details</h2>
+        <form id="fd-form">
+            <div class="fd-form-group">
+                <label for="fd-delivery-fee">Delivery Fee (Rs.)</label>
+                <input type="number" id="fd-delivery-fee" required>
+            </div>
+            <div class="fd-form-group">
+                <label for="fd-cod-fee">COD Fee (Rs.)</label>
+                <input type="number" id="fd-cod-fee" required>
+            </div>
+            <button type="submit" class="fd-btn">Update</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock body %}

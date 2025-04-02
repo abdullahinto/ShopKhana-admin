@@ -9,6 +9,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
 
 
         <!-- Google Font: Bangers -->
@@ -24,6 +25,8 @@
 
 
         <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='js/theme.js') }}"></script>
+
 
 
 
@@ -47,17 +50,23 @@
     <div class="dropdown-container">
         <button class="dropdown-button">Admin Actions ▼</button>
         <div class="dropdown-content">
-            <a href="#">Dashboard</a>
+            <a href="{{url_for('admin_dashboard')}}">Dashboard</a>
             <a href="{{url_for('admin_products')}}">Products</a>
             <a href="{{url_for('admin_categories')}}">Categories</a>
             <a href="{{url_for('admin_faqs')}}">FAQs</a>
             <a href="{{url_for('admin_banners')}}">Banners</a>
-            <a href="#">Settings</a>
-            <a href="#">Logout</a>
+            <a href="{{url_for('admin_reviews')}}">Reviews</a>
+            <a href="{{url_for('admin_coupons')}}">Coupons</a>
+            <a href="{{url_for('admin_orders')}}">Orders</a>
+            <a href="{{url_for('admin_fee_details')}}">Fees</a>
+            <a href="{{url_for('admin_returns')}}">Returns</a>
+            <a href="{{url_for('admin_logout')}}">Logout</a>
+            
 
         </div>
 
     </div>
+
 
 
     {% block body %}

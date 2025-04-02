@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Dashboard - ShopKhana{% endblock title %}
+
+{% block body %}
+
+
+<header class="db-header">
+    <h1>Dashboard</h1>
+</header>
+
+<!-- Metrics Cards Grid -->
+<section class="db-metrics-grid">
+    <!-- Each card is clickable. Data will be populated by dashboard.js -->
+    <div class="db-card" data-link="/admin/orders" id="total-orders">
+        <h2>Total Orders</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/orders" id="delivered-orders">
+        <h2>Delivered Orders</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/orders" id="pending-orders">
+        <h2>Pending Orders</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/orders" id="total-sales">
+        <h2>Total Sales (Rs.)</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/orders" id="avg-order-value">
+        <h2>Avg Order Value (Rs.)</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/returns" id="refund-percentage">
+        <h2>Refund Percentage (%)</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/products" id="total-products">
+        <h2>Total Products</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/categories" id="total-categories">
+        <h2>Total Categories</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/coupons" id="total-coupons">
+        <h2>Total Coupons</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/returns" id="total-returns">
+        <h2>Total Return Requests</h2>
+        <p class="metric-value">0</p>
+    </div>
+    <div class="db-card" data-link="/admin/reviews" id="total-reviews">
+        <h2>Total Reviews</h2>
+        <p class="metric-value">0</p>
+    </div>
+</section>
+
+<!-- Trends Chart Section -->
+<section class="db-chart-section">
+    <h2>Sales Trends (Last 7 Days)</h2>
+    <canvas id="salesChart"></canvas>
+</section>
+
+
+{% endblock body %}

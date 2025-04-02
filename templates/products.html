@@ -12,7 +12,6 @@
 
 {% block body %}
 
-
 <!-- Header -->
 <header class="sk-prod-header">
     <h1>Product Management</h1>
@@ -66,11 +65,13 @@
                 </tr>
             </thead>
             <tbody id="sk-prod-table-body">
-                <!-- Product rows will be rendered via JS -->
+                <!-- Product rows will be rendered via JS.
+                     Example for rendering images:
+                -->
             </tbody>
         </table>
     </div>
-    <!-- Add this pagination container in your HTML where you want the controls -->
+    <!-- Pagination container -->
     <div id="sk-prod-pagination" class="pagination">
         <!-- Pagination controls go here -->
     </div>
@@ -108,15 +109,12 @@
                     <input type="text" id="sk-prod-colors-input" placeholder="Type a color and press Enter">
                     <div id="sk-prod-colors-tags" class="sk-prod-colors-tags"></div>
                 </div>
-
                 <div class="sk-prod-form-group sk-prod-full">
                     <label for="sk-prod-additional-info-input">Additional Info</label>
                     <input type="text" id="sk-prod-additional-info-input"
                         placeholder="Type additional info and press Enter">
                     <div id="sk-prod-additional-info-tags" class="sk-prod-additional-info-tags"></div>
                 </div>
-
-
                 <div class="sk-prod-form-group">
                     <label for="sk-prod-category">Product Category</label>
                     <select id="sk-prod-category" required>
@@ -143,7 +141,11 @@
                 <div class="sk-prod-form-group sk-prod-full">
                     <label for="sk-prod-images">Product Images</label>
                     <input type="file" id="sk-prod-images" accept="image/*" multiple>
-                    <div id="sk-prod-images-preview" class="sk-prod-images-preview"></div>
+                    <div id="sk-prod-images-preview" class="sk-prod-images-preview">
+                        <!-- Uploaded image previews will be displayed here.
+                             Example (to be generated via JS upon upload):
+                        -->
+                    </div>
                 </div>
             </div>
             <button type="submit" class="sk-prod-btn sk-prod-submit-btn">Submit</button>
@@ -158,7 +160,5 @@
         <div id="sk-prod-img-popup-gallery" class="sk-prod-img-popup-gallery"></div>
     </div>
 </div>
-
-
 
 {% endblock body %}

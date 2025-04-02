@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rev.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/rev.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Reviews Management - ShopKhana{% endblock title %}
+
+
+{% block body %}
+
+<!-- Header -->
+<header class="sk-rv-header">
+    <h1>Reviews Management</h1>
+</header>
+
+<!-- Search & Filter Section -->
+<section class="sk-rv-search-filter">
+    <input type="text" id="sk-rv-search" placeholder="Search reviews by product link or email">
+    <select id="sk-rv-rating-filter">
+        <option value="">All Ratings</option>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+    </select>
+</section>
+
+<!-- Bulk Actions Section -->
+<section class="sk-rv-bulk-actions">
+    <input type="checkbox" id="sk-rv-select-all"> Select All
+    <button id="sk-rv-bulk-delete" class="sk-rv-btn">Delete Selected</button>
+    <span id="sk-rv-total-count" class="sk-rv-total-count">Total Reviews: 0</span>
+</section>
+
+<!-- Reviews Table Section -->
+<section class="sk-rv-table-section">
+    <div class="sk-rv-table-container">
+        <table id="sk-rv-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="sk-rv-select-all"></th>
+                    <th>Product Link</th>
+                    <th>User Email</th>
+                    <th>Review</th>
+                    <th>Rating</th>
+                    <th>Images</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="sk-rv-table-body">
+                <!-- Review rows will be dynamically rendered here -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Modal for Editing Review -->
+<div id="sk-rv-modal" class="sk-rv-modal">
+    <div class="sk-rv-modal-content">
+        <span class="sk-rv-modal-close">&times;</span>
+        <h2 class="sk-rv-modal-heading">Edit Review</h2>
+        <form id="sk-rv-form">
+            <div class="sk-rv-form-group">
+                <label>Product Link</label>
+                <a id="sk-rv-product-link" href="#" target="_blank"></a>
+            </div>
+            <!-- Removed Question field as requested -->
+            <div class="sk-rv-form-group">
+                <label>Review</label>
+                <textarea id="sk-rv-review" required></textarea>
+            </div>
+            <div class="sk-rv-form-group">
+                <label>Rating (1-5)</label>
+                <input type="number" id="sk-rv-rating" min="1" max="5" required>
+            </div>
+            <button type="submit" class="sk-rv-btn">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Showing Images -->
+<div id="sk-rv-img-modal" class="sk-rv-img-modal">
+    <div class="sk-rv-img-modal-content">
+        <span class="sk-rv-img-modal-close">&times;</span>
+        <div id="sk-rv-img-gallery" class="sk-rv-img-gallery"></div>
+    </div>
+</div>
+
+
+{% endblock body %}

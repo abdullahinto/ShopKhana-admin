@@ -1,0 +1,276 @@
+/* ==========================
+   SK-RV: Admin Reviews Management Page
+   ========================== */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfbf6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-rv-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sk-rv-header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+/* Search & Filter Section */
+.sk-rv-search-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sk-rv-search-filter input[type="text"],
+.sk-rv-search-filter select {
+  padding: 8px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+/* Bulk Actions Section */
+.sk-rv-bulk-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sk-rv-bulk-actions input[type="checkbox"] {
+  transform: scale(1.2);
+}
+.sk-rv-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-rv-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+.sk-rv-total-count {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Table Section */
+.sk-rv-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-rv-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-rv-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-rv-table th,
+#sk-rv-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  text-align: left;
+}
+#sk-rv-table th {
+  background-color: #f9f9f9;
+}
+#sk-rv-table td a {
+  color: #0077b6;
+  text-decoration: none;
+}
+#sk-rv-table td a:hover {
+  text-decoration: underline;
+}
+
+/* Modal for Editing Review */
+.sk-rv-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+.sk-rv-modal-content {
+  background-color: #fff;
+  border: 2px solid orange;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  position: relative;
+  animation: rvModalSlideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+@keyframes rvModalSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sk-rv-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-rv-modal-heading {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.sk-rv-form-group {
+  margin-bottom: 15px;
+}
+.sk-rv-form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.sk-rv-form-group textarea,
+.sk-rv-form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Modal Submit Button */
+.sk-rv-modal-content button {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-rv-modal-content button:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+/* Modal for Image Gallery */
+.sk-rv-img-modal {
+  display: none;
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+}
+.sk-rv-img-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+.sk-rv-img-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-rv-img-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.sk-rv-img-gallery img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+
+
+/* Styling for the edit button */
+.sk-rv-edit-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove borders */
+    padding: 5px 10px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the link into a button */
+    font-size: 12px; /* Increase font size */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 10px;
+  }
+  
+  /* Styling for the delete button */
+  .sk-rv-delete-btn {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    border: none; /* Remove borders */
+    padding: 5px 10px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the link into a button */
+    font-size: 12px; /* Increase font size */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 10px;
+    margin-left: 5px;
+  }
+  
+  /* Styling for the show button */
+  .sk-rv-show-btn {
+    background-color: #008CBA; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove borders */
+    padding: 5px 10px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the link into a button */
+    font-size: 12px; /* Increase font size */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 10px;
+  }
+  

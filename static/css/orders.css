@@ -1,0 +1,217 @@
+/* ==========================
+   SK-ORD: Orders Management Page Styles
+   ========================== */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfbf6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-ord-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sk-ord-header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+/* Filters & Sorting Section */
+.sk-ord-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.sk-ord-filters input[type="text"],
+.sk-ord-filters select {
+  padding: 8px;
+  font-size: 14px;
+  min-width: 180px;
+}
+
+/* Bulk Actions Section */
+.sk-ord-bulk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sk-ord-bulk input[type="checkbox"] {
+  transform: scale(1.2);
+}
+.sk-ord-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-ord-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+.sk-ord-total-count {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Orders Table Section */
+.sk-ord-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-ord-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-ord-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-ord-table th,
+#sk-ord-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+#sk-ord-table th {
+  background-color: #f9f9f9;
+}
+#sk-ord-table td a {
+  color: #0077b6;
+  text-decoration: none;
+}
+#sk-ord-table td a:hover {
+  text-decoration: underline;
+}
+/* Truncate address: show only first word */
+.sk-ord-address {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Copy button on hover for phone and customer name */
+.copy-container {
+  position: relative;
+  display: inline-block;
+}
+.copy-button {
+  display: none;
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #0077b6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 10px;
+  cursor: pointer;
+}
+.copy-container:hover .copy-button {
+  display: inline-block;
+}
+
+/* Pagination */
+.sk-ord-pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+.sk-ord-pagination a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #0077b6;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.3s;
+}
+.sk-ord-pagination a:hover {
+  background-color: #ffe4b3;
+}
+.sk-ord-pagination a.active {
+  background-color: orange;
+  color: #fff;
+  border-color: orange;
+}
+
+/* Toast Notification */
+.sk-ord-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+/* Modal for updating order status (if needed) - Here we don't need a modal, we just use the Delivered button action */
+
+
+.sk-ord-delivered-btn {
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.sk-ord-delivered-btn:hover {
+    background-color: darkgreen; /* Slightly darker green for a hover effect */
+    transform: scale(1.05); /* Makes the button subtly enlarge */
+}
+
+.sk-ord-delivered-btn:active {
+    transform: scale(0.95); /* Slightly shrinks the button when clicked */
+}
+
+
+.copy-button{
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.copy-button:hover {
+    background-color: darkblue;
+    transform: scale(1.05);
+}
+
+.copy-button:active {
+    transform: scale(0.95);
+}

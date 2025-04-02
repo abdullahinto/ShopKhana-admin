@@ -1,0 +1,89 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coupon.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/coupon.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Coupon Management - ShopKhana{% endblock title %}
+
+{% block body %}
+
+<!-- Header Section -->
+<header class="sk-cpn-header">
+  <h1>Coupons Management</h1>
+  <button id="sk-cpn-new-btn" class="sk-cpn-btn sk-cpn-new-btn">+ New Coupon</button>
+</header>
+
+<!-- Search, Filter & Sort Section -->
+<section class="sk-cpn-search-filter">
+  <input type="text" id="sk-cpn-search" placeholder="Search by coupon code or _id">
+  <select id="sk-cpn-discount-filter">
+    <option value="">All Discounts</option>
+    <option value="10-30">10% - 30%</option>
+    <option value="31-50">31% - 50%</option>
+    <option value="51-80">51% - 80%</option>
+  </select>
+  <select id="sk-cpn-sort">
+    <option value="code-asc">Coupon Code (A-Z)</option>
+    <option value="code-desc">Coupon Code (Z-A)</option>
+    <option value="discount-asc">Discount Low to High</option>
+    <option value="discount-desc">Discount High to Low</option>
+  </select>
+</section>
+
+<!-- Bulk Actions -->
+<section class="sk-cpn-bulk-actions">
+  <input type="checkbox" id="sk-cpn-select-all"> Select All
+  <button id="sk-cpn-bulk-delete" class="sk-cpn-btn sk-cpn-bulk-delete">Delete Selected</button>
+  <span id="sk-cpn-total-count" class="sk-cpn-total-count">Total Coupons: 0</span>
+</section>
+
+<!-- Coupons Table -->
+<section class="sk-cpn-table-section">
+  <div class="sk-cpn-table-container">
+    <table id="sk-cpn-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="sk-cpn-select-all"></th>
+          <th>Coupon Code</th>
+          <th>Discount (%)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="sk-cpn-table-body">
+        <!-- Table rows will be dynamically rendered here -->
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination Controls -->
+  <div class="sk-cpn-pagination" id="sk-cpn-pagination">
+    <!-- Pagination links will be rendered here -->
+  </div>
+</section>
+
+<!-- Coupon Modal Popup (for Add/Edit) -->
+<div id="sk-cpn-modal" class="sk-cpn-modal">
+  <div class="sk-cpn-modal-content">
+    <span class="sk-cpn-modal-close">&times;</span>
+    <h2 class="sk-cpn-modal-heading">Add / Edit Coupon</h2>
+    <form id="sk-cpn-form">
+      <div class="sk-cpn-form-group">
+        <label for="sk-cpn-code">Coupon Code</label>
+        <input type="text" id="sk-cpn-code" required>
+      </div>
+      <div class="sk-cpn-form-group">
+        <label for="sk-cpn-discount">Discount Percent</label>
+        <input type="number" id="sk-cpn-discount" placeholder="10 - 80" required>
+      </div>
+      <button type="submit" class="sk-cpn-btn sk-cpn-submit-btn">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock body %}

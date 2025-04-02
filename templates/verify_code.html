@@ -1,0 +1,36 @@
+<!-- templates/verify_code.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>کیا سمجھے جناب؟</h2>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('verify_security_code') }}?email={{ email }}">
+        <div class="form-group">
+            <input type="text" id="code" name="code" maxlength="6" required>
+
+        </div>
+        <button type="submit" class="btn">جی سمجھ گیا</button>
+    </form>
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const code = document.getElementById('code').value.trim();
+        if (code.length !== 6) {
+            e.preventDefault();
+            alert('بھائی خزانے کی چابی ایسی نہیں ہونی چاہیے, دوبارہ کوشش کرو');
+        }
+    });
+</script>
+{% endblock %}

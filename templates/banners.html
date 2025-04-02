@@ -10,11 +10,7 @@
 
 {% block title %}Banners Management - ShopKhana{% endblock title %}
 
-
 {% block body %}
-
-
-
 
 <!-- Header with Page Title and +New Banner Button -->
 <header class="sk-ban-header">
@@ -30,7 +26,6 @@
         <option value="promotion">Promotion Category</option>
         <option value="product">Product Category</option>
     </select>
-
     <button id="sk-ban-bulk-delete" class="sk-ban-btn sk-ban-bulk-delete">Delete Selected</button>
 </section>
 
@@ -48,10 +43,12 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-
             <tbody id="sk-ban-table-body">
-          
-                <!-- Banner rows will be rendered dynamically -->
+                <!-- Banner rows will be rendered dynamically via JS.
+                     When rendering the "Image" cell, your JS should check if the banner image value 
+                     is a full URL or a GridFS file ID. If it's an ID, build the URL using:
+                     window.location.origin + "/admin/uploaded_image/" + image_id
+                -->
             </tbody>
         </table>
     </div>
@@ -102,7 +99,13 @@
                 <div class="sk-ban-form-group sk-ban-full">
                     <label for="sk-ban-image">Upload Banner Image</label>
                     <input type="file" id="sk-ban-image" accept="image/*" required>
-                    <div id="sk-ban-image-preview" class="sk-ban-image-preview"></div>
+                    <div id="sk-ban-image-preview" class="sk-ban-image-preview">
+                        <!-- Uploaded image preview will be displayed here.
+                             For GridFS, once the file is uploaded via the new endpoint,
+                             use the returned file ID to generate the preview URL:
+                             window.location.origin + "/admin/uploaded_image/" + image_id
+                        -->
+                    </div>
                 </div>
             </div>
             <button type="submit" class="sk-ban-btn sk-ban-submit-btn">Submit</button>
@@ -117,6 +120,5 @@
         <div id="sk-ban-img-popup-gallery" class="sk-ban-img-popup-gallery"></div>
     </div>
 </div>
-
 
 {% endblock body %}

@@ -1,0 +1,375 @@
+/* ==========================
+   SK-RET: Returns Management Page Styles
+   ========================== */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #FDFBF6;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header */
+.sk-ret-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sk-ret-header h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+/* Search & Filter Section */
+.sk-ret-search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.sk-ret-search-filter input[type="text"],
+.sk-ret-search-filter select {
+  padding: 8px;
+  font-size: 14px;
+  min-width: 180px;
+}
+
+/* Bulk Actions Section */
+.sk-ret-bulk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sk-ret-bulk input[type="checkbox"] {
+  transform: scale(1.2);
+}
+.sk-ret-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-ret-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+.sk-ret-total-count {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Table Section */
+.sk-ret-table-section {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.sk-ret-table-container {
+  width: 100%;
+  border: 2px solid orange;
+  border-radius: 6px;
+  background-color: #fff;
+  overflow-x: auto;
+}
+#sk-ret-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#sk-ret-table th,
+#sk-ret-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  text-align: left;
+}
+#sk-ret-table th {
+  background-color: #f9f9f9;
+}
+#sk-ret-table td a {
+  color: #0077b6;
+  text-decoration: none;
+}
+#sk-ret-table td a:hover {
+  text-decoration: underline;
+}
+/* Truncate items column: show only first word */
+.sk-ret-items {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Copy button on hover for items */
+.copy-container {
+  position: relative;
+  display: inline-block;
+}
+.copy-button {
+  display: none;
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #0077b6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 10px;
+  cursor: pointer;
+}
+.copy-container:hover .copy-button {
+  display: inline-block;
+}
+
+/* Pagination */
+.sk-ret-pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+.sk-ret-pagination a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #0077b6;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: background 0.3s;
+}
+.sk-ret-pagination a:hover {
+  background-color: #ffe4b3;
+}
+.sk-ret-pagination a.active {
+  background-color: orange;
+  color: #fff;
+  border-color: orange;
+}
+
+/* Refund Screenshot Upload Modal */
+.sk-ret-refund-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+}
+.sk-ret-refund-modal-content {
+  background-color: #fff;
+  border: 2px solid orange;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  position: relative;
+  animation: refundModalSlideIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+@keyframes refundModalSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sk-ret-refund-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-ret-form-group {
+  margin-bottom: 15px;
+}
+.sk-ret-form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.sk-ret-form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.sk-ret-btn {
+  background-color: orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s, transform 0.3s;
+}
+.sk-ret-btn:hover {
+  background-color: #e69500;
+  transform: scale(1.03);
+}
+
+/* Media Popup Modal for Images & Videos */
+.sk-ret-media-modal {
+  display: none;
+  position: fixed;
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  align-items: center;
+  justify-content: center;
+}
+.sk-ret-media-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+.sk-ret-media-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+.sk-ret-media-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.sk-ret-media-gallery img,
+.sk-ret-media-gallery video {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Toast Notification */
+.sk-ret-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+
+
+.sk-ret-refund-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+}
+.sk-ret-refund-btn:hover {
+  background-color: #218838;
+  transform: scale(1.03);
+}
+
+.sk-ret-show-btn {
+  background-color: #008CBA; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+}
+.sk-ret-show-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+
+
+/* Styling for the delete button */
+.sk-ret-delete-btn {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 5px 10px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the link into a button */
+  font-size: 12px; /* Increase font size */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 10px;
+  margin-left: 5px;
+}
+
+
+.sk-ret-delete-btn:hover {
+  background-color: red;
+  transform: scale(1.03);
+}
+
+
+
+/* Media Gallery: Let images and videos display at natural size */
+.sk-ret-media-gallery img,
+.sk-ret-media-gallery video {
+  max-width: 100%; /* Allow full container width if needed */
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+
+.copy-button{
+  background-color: blue;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.copy-button:hover {
+  background-color: darkblue;
+  transform: scale(1.05);
+}

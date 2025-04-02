@@ -1,0 +1,100 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/returns.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/returns.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Returns Management - ShopKhana{% endblock title %}
+
+{% block body %}
+
+  <!-- Header -->
+  <header class="sk-ret-header">
+    <h1>Returns Management</h1>
+  </header>
+
+  <!-- Search & Filter Section -->
+  <section class="sk-ret-search-filter">
+    <input type="text" id="sk-ret-search" placeholder="Search by reason, email, or tracking id">
+    <select id="sk-ret-refund-filter">
+      <option value="">All Refund Status</option>
+      <option value="Pending">Pending</option>
+      <option value="Refunded">Refunded</option>
+    </select>
+    <select id="sk-ret-return-filter">
+      <option value="">All Return Status</option>
+      <option value="Eligible">Eligible</option>
+      <option value="Not Eligible">Not Eligible</option>
+    </select>
+  </section>
+
+  <!-- Bulk Actions Section -->
+  <section class="sk-ret-bulk">
+    <input type="checkbox" id="sk-ret-select-all"> Select All
+    <button id="sk-ret-bulk-delete" class="sk-ret-btn">Delete Selected</button>
+    <span id="sk-ret-total-count" class="sk-ret-total-count">Total Returns: 0</span>
+  </section>
+
+  <!-- Returns Table Section -->
+  <section class="sk-ret-table-section">
+    <div class="sk-ret-table-container">
+      <table id="sk-ret-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="sk-ret-select-all"></th>
+            <th>Tracking ID</th>
+            <th>User Email</th>
+            <th>Return Reason</th>
+            <th>Requested At</th>
+            <th>Return Status</th>
+            <th>Items</th>
+            <th>Images</th>
+            <th>Videos</th>
+            <th>Refund Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="sk-ret-table-body">
+          <!-- Rows will be rendered dynamically -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <div class="sk-ret-pagination" id="sk-ret-pagination">
+      <!-- Pagination links go here -->
+    </div>
+  </section>
+
+  <!-- Refund Screenshot Upload Modal -->
+  <div id="sk-ret-refund-modal" class="sk-ret-refund-modal">
+    <div class="sk-ret-refund-modal-content">
+      <span class="sk-ret-refund-modal-close">&times;</span>
+      <h2>Upload Refund Screenshot</h2>
+      <form id="sk-ret-refund-form">
+        <div class="sk-ret-form-group">
+          <label for="sk-ret-screenshot">Screenshot</label>
+          <input type="file" id="sk-ret-screenshot" accept="image/*" required>
+        </div>
+        <button type="submit" class="sk-ret-btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Media Popup Modal (for images & videos) -->
+  <div id="sk-ret-media-modal" class="sk-ret-media-modal">
+    <div class="sk-ret-media-modal-content">
+      <span class="sk-ret-media-modal-close">&times;</span>
+      <div id="sk-ret-media-gallery" class="sk-ret-media-gallery"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="sk-ret-toast" class="sk-ret-toast"></div>
+
+
+    
+{% endblock body %}

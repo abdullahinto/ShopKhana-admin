@@ -264,8 +264,8 @@ body {
   gap: 10px;
 }
 .sk-prod-images-preview img {
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -325,11 +325,13 @@ body {
   margin-top: 20px;
 }
 .sk-prod-img-popup-gallery img {
+
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid #ccc;
+  
 }
 
 
@@ -399,4 +401,6 @@ body {
 .sk-prod-additional-info-tag i {
   cursor: pointer;
 }
+
+
 

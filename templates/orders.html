@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}">
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script defer src="{{ url_for('static', filename='js/orders.js') }}"></script>
+{% endblock extra_js %}
+
+{% block title %}Orders Management - ShopKhana{% endblock title %}
+
+
+{% block body %}
+
+
+<!-- Header -->
+<header class="sk-ord-header">
+    <h1>Orders Management</h1>
+</header>
+
+<!-- Filters & Sorting Section -->
+<section class="sk-ord-filters">
+    <input type="text" id="sk-ord-search" placeholder="Search by order_id, email, or customer name">
+    <select id="sk-ord-status-filter">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Delivered">Delivered</option>
+    </select>
+    <select id="sk-ord-payment-filter">
+        <option value="">All Payment Methods</option>
+        <option value="COD">COD</option>
+        <option value="JazzCash">JazzCash</option>
+        <option value="Easypaisa">Easypaisa</option>
+        <option value="Nayapay">Nayapay</option>
+        <option value="UBL bank">UBL bank</option>
+    </select>
+    <select id="sk-ord-province-filter">
+        <option value="">All Provinces</option>
+        <option value="punjab">Punjab</option>
+        <option value="sindh">Sindh</option>
+        <option value="khyber pakhtunkhwa">Khyber Pakhtunkhwa</option>
+        <option value="balochistan">Balochistan</option>
+    </select>
+    <select id="sk-ord-sort">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+    </select>
+</section>
+
+<!-- Bulk Actions Section -->
+<section class="sk-ord-bulk">
+    <input type="checkbox" id="sk-ord-select-all"> Select All
+    <button id="sk-ord-bulk-delete" class="sk-ord-btn">Delete Selected</button>
+    <span id="sk-ord-total-count" class="sk-ord-total-count">Total Orders: 0</span>
+</section>
+
+<!-- Orders Table Section -->
+<section class="sk-ord-table-section">
+    <div class="sk-ord-table-container">
+        <table id="sk-ord-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="sk-ord-select-all"></th>
+                    <th>Order ID</th>
+                    <th>User Email</th>
+                    <th>Customer Name</th>
+                    <th>Address</th>
+                    <th>Province</th>
+                    <th>Payment Method</th>
+                    <th>Payment Amount (Rs.)</th>
+                    <th>Order Status</th>
+                    <th>Transaction Date</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="sk-ord-table-body">
+                <!-- Order rows will be dynamically rendered here -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination -->
+    <div class="sk-ord-pagination" id="sk-ord-pagination">
+        <!-- Pagination links (10 rows per page) -->
+    </div>
+</section>
+
+<!-- Toast Notification -->
+<div id="sk-ord-toast" class="sk-ord-toast">Order status changed successfully and order arrival date has been added
+</div>
+
+
+
+
+{% endblock body %}
