@@ -3,7 +3,7 @@
 {% block content %}
 <div class="auth-container">
     <div class="auth-header">
-        <h2>Join Us</h2>
+        <h2>Become Our Friend</h2>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -16,11 +16,11 @@
 
     <form method="POST" action="{{ url_for('create_security_code') }}?email={{ email }}">
         <div class="form-group">
-            <label for="code">Enter the security code:</label>
+            <label for="code">What will be the key to the treasure?</label>
             <input type="text" id="code" name="code" maxlength="6" required>
-            <small>Anything works</small>
+            <small>Anything you like</small>
         </div>
-        <button type="submit" class="btn">All done!</button>
+        <button type="submit" class="btn">Task Completed, Sir</button>
     </form>
 </div>
 
@@ -29,8 +29,9 @@
         const code = document.getElementById('code').value.trim();
         if (code.length !== 6) {
             e.preventDefault();
-            alert('The security code must be 6 characters long. Please try again.');
+            alert('The key to the treasure must be exactly 6 characters long. Please try again.');
         }
     });
 </script>
 {% endblock %}
+

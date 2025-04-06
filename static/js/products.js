@@ -284,14 +284,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateDiscountedPrice() {
     const orig = parseFloat(prodOrigPrice.value);
-    const discount = parseFloat(prodDiscountPercent.value);
-    if (!isNaN(orig) && !isNaN(discount)) {
+    let discount = parseFloat(prodDiscountPercent.value);
+    // If discount is not provided, default to 0
+    if (isNaN(discount)) discount = 0;
+    if (!isNaN(orig)) {
       const discounted = orig * (1 - discount / 100);
-      prodDiscountedPrice.value = discounted.toFixed(2);
+      // If a discount is applied, round off the discounted price, otherwise use original price
+      prodDiscountedPrice.value = discount > 0 ? Math.round(discounted) : orig;
     } else {
       prodDiscountedPrice.value = "";
     }
   }
+  
   prodOrigPrice.addEventListener("input", updateDiscountedPrice);
   prodDiscountPercent.addEventListener("input", updateDiscountedPrice);
 
@@ -387,7 +391,6 @@ document.addEventListener("DOMContentLoaded", () => {
       !prodTitle.value ||
       !prodDescription.value ||
       !prodOrigPrice.value ||
-      !prodDiscountPercent.value ||
       !prodCategory.value ||
       !prodPromotion.value ||
       !prodBrand.value
@@ -417,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title: prodTitle.value,
         description: prodDescription.value,
         originalPrice: parseFloat(prodOrigPrice.value),
-        discountPercent: parseFloat(prodDiscountPercent.value),
+        discountPercent: isNaN(parseFloat(prodDiscountPercent.value)) ? 0 : parseFloat(prodDiscountPercent.value),
         discountedPrice: parseFloat(prodDiscountedPrice.value),
         colors: colorTags,
         additionalInfo: additionalInfoTags,

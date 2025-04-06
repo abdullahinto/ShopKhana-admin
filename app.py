@@ -67,7 +67,7 @@ def admin_login_required(ajax=False):
             if not session.get('admin_authenticated'):
                 if ajax:
                     return jsonify({'error': 'Unauthorized access'}), 401
-                flash('Please log in before accessing this page.', 'error')
+                flash('Please authenticate yourself before proceeding.', 'error')
                 return redirect(url_for('admin_login', next=request.url))
             return f(*args, **kwargs)
         return decorated_function
@@ -80,7 +80,7 @@ def admin_login():
     if request.method == 'POST':
         email = request.form.get('email', '').strip().lower()
         if email not in ALLOWED_ADMINS:
-            flash('Your email address is not authorized.', 'error')
+            flash('Sorry, your email address is not recognized.', 'error')
             return redirect(url_for('admin_login'))
             
         admin = mongo.db.admins.find_one({'email': email})
@@ -105,7 +105,7 @@ def create_security_code():
     if request.method == 'POST':
         code = request.form.get('code', '').strip()
         if len(code) != 6:
-            flash('The security code must be 6 characters long. Please try again.', 'error')
+            flash('The security code must be exactly 6 characters long. Try again.', 'error')
             return redirect(url_for('create_security_code', email=email))
             
         mongo.db.admins.update_one(
@@ -113,7 +113,7 @@ def create_security_code():
             {'$set': {'security_code_hash': generate_password_hash(code)}}
         )
         send_verification_email(email)
-        flash('Your gift has been sent to your address.', 'success')
+        flash('A confirmation email has been sent to your address.', 'success')
         return redirect(url_for('admin_login'))
     
     return render_template('create_code.html', email=email)
@@ -127,17 +127,17 @@ def verify_security_code():
         
     admin = mongo.db.admins.find_one({'email': email})
     if not admin or not admin.get('security_code_hash'):
-        flash('It seems you are here for the first time. Please create a code.', 'error')
+        flash('It seems like this is your first time here. Please create a security code.', 'error')
         return redirect(url_for('create_security_code', email=email))
         
     if request.method == 'POST':
         code = request.form.get('code', '').strip()
         if check_password_hash(admin['security_code_hash'], code):
             send_verification_email(email)
-            flash('Your gift has been sent to your desired address.', 'success')
+            flash('A confirmation email has been sent to your address.', 'success')
             return redirect(url_for('admin_login'))
         else:
-            flash('This code is not correct. Please try again.', 'error')
+            flash('The entered code is incorrect.', 'error')
     
     return render_template('verify_code.html', email=email)
 
@@ -157,8 +157,10 @@ def verify_token(token):
 def admin_logout():
     session.pop('admin_authenticated', None)
     session.pop('admin_email', None)
-    flash('Stay safe. You have logged out successfully.', 'success')
+    flash('You have been logged out successfully. Stay safe!', 'success')
     return redirect(url_for('admin_login'))
+
+
 
 # Protect admin routes
 @app.before_request

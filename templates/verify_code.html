@@ -3,7 +3,7 @@
 {% block content %}
 <div class="auth-container">
     <div class="auth-header">
-        <h2>Verification Required</h2>
+        <h2>Verify code</h2>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -16,18 +16,37 @@
 
     <form method="POST" action="{{ url_for('verify_security_code') }}?email={{ email }}">
         <div class="form-group">
-            <input type="text" id="code" name="code" maxlength="6" required>
+            <label for="code">Security Code</label>
+            <div style="position: relative;">
+                <input type="password" id="code" name="code" maxlength="6" required>
+                <button type="button" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                    👁️
+                </button>
+            </div>
         </div>
-        <button type="submit" class="btn">Got it!</button>
+        <button type="submit" class="btn">Verify</button>
     </form>
 </div>
 
 <script>
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('code');
+
+    togglePasswordButton.addEventListener('click', function () {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            togglePasswordButton.textContent = '🙈'; // Change icon to "hide"
+        } else {
+            passwordInput.type = 'password';
+            togglePasswordButton.textContent = '👁️'; // Change icon to "show"
+        }
+    });
+
     document.querySelector('form').addEventListener('submit', function (e) {
-        const code = document.getElementById('code').value.trim();
+        const code = passwordInput.value.trim();
         if (code.length !== 6) {
             e.preventDefault();
-            alert('The security code must be 6 characters long. Please try again.');
+            alert('The key to the treasure must be exactly 6 characters long. Please try again.');
         }
     });
 </script>
