@@ -1,10 +1,9 @@
-<!-- templates/create_code.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="auth-container">
     <div class="auth-header">
-        <h2>ہمارے دوست بنیں</h2>
+        <h2>Join Us</h2>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -17,11 +16,11 @@
 
     <form method="POST" action="{{ url_for('create_security_code') }}?email={{ email }}">
         <div class="form-group">
-            <label for="code">خزانے کی چابی کیا ہو گی؟</label>
+            <label for="code">Enter the security code:</label>
             <input type="text" id="code" name="code" maxlength="6" required>
-            <small>کچھ بھی</small>
+            <small>Anything works</small>
         </div>
-        <button type="submit" class="btn">کام ہو گیا ہے جناب</button>
+        <button type="submit" class="btn">All done!</button>
     </form>
 </div>
 
@@ -30,7 +29,7 @@
         const code = document.getElementById('code').value.trim();
         if (code.length !== 6) {
             e.preventDefault();
-            alert('بھائی خزانے کی چابی ایسی نہیں ہونی چاہیے, دوبارہ کوشش کرو');
+            alert('The security code must be 6 characters long. Please try again.');
         }
     });
 </script>

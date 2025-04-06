@@ -1,10 +1,9 @@
-<!-- templates/verify_code.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="auth-container">
     <div class="auth-header">
-        <h2>کیا سمجھے جناب؟</h2>
+        <h2>Verification Required</h2>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -18,9 +17,8 @@
     <form method="POST" action="{{ url_for('verify_security_code') }}?email={{ email }}">
         <div class="form-group">
             <input type="text" id="code" name="code" maxlength="6" required>
-
         </div>
-        <button type="submit" class="btn">جی سمجھ گیا</button>
+        <button type="submit" class="btn">Got it!</button>
     </form>
 </div>
 
@@ -29,7 +27,7 @@
         const code = document.getElementById('code').value.trim();
         if (code.length !== 6) {
             e.preventDefault();
-            alert('بھائی خزانے کی چابی ایسی نہیں ہونی چاہیے, دوبارہ کوشش کرو');
+            alert('The security code must be 6 characters long. Please try again.');
         }
     });
 </script>

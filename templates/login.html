@@ -1,10 +1,9 @@
-<!-- templates/login.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="auth-container">
     <div class="auth-header">
-        <h2>جناب تسی کون او؟</h2>
+        <h2>Who Are You?</h2>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -17,10 +16,10 @@
 
     <form method="POST" action="{{ url_for('admin_login') }}">
         <div class="form-group">
-            <label for="email">آپ کہاں رهتے ہیں</label>
+            <label for="email">Where do you live?</label>
             <input type="email" id="email" name="email" required>
         </div>
-        <button type="submit" class="btn">میں یہاں سے ہوں</button>
+        <button type="submit" class="btn">Submit</button>
     </form>
 </div>
 {% endblock %}

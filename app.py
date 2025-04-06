@@ -67,7 +67,7 @@ def admin_login_required(ajax=False):
             if not session.get('admin_authenticated'):
                 if ajax:
                     return jsonify({'error': 'Unauthorized access'}), 401
-                flash('ادھر  جانے سے پہلے سے ہمیں اپنی زیارت کروائیں', 'error')
+                flash('Please log in before accessing this page.', 'error')
                 return redirect(url_for('admin_login', next=request.url))
             return f(*args, **kwargs)
         return decorated_function
@@ -80,7 +80,7 @@ def admin_login():
     if request.method == 'POST':
         email = request.form.get('email', '').strip().lower()
         if email not in ALLOWED_ADMINS:
-            flash('نہ بھائی اپ کا پتہ غلط ہے', 'error')
+            flash('Your email address is not authorized.', 'error')
             return redirect(url_for('admin_login'))
             
         admin = mongo.db.admins.find_one({'email': email})
@@ -99,13 +99,13 @@ def admin_login():
 def create_security_code():
     email = request.args.get('email')
     if not email or email not in ALLOWED_ADMINS:
-        flash('کچھ غلط ہو گیا', 'error')
+        flash('Something went wrong.', 'error')
         return redirect(url_for('admin_login'))
         
     if request.method == 'POST':
         code = request.form.get('code', '').strip()
         if len(code) != 6:
-            flash('بھائی خزانے کی چابی ایسی نہی ہونی چاہیے, دوبارہ کوشش کرو', 'error')
+            flash('The security code must be 6 characters long. Please try again.', 'error')
             return redirect(url_for('create_security_code', email=email))
             
         mongo.db.admins.update_one(
@@ -113,7 +113,7 @@ def create_security_code():
             {'$set': {'security_code_hash': generate_password_hash(code)}}
         )
         send_verification_email(email)
-        flash('آپ کا تحفہ اپ کے پتہ پر بھیج دیا گیا ہے', 'success')
+        flash('Your gift has been sent to your address.', 'success')
         return redirect(url_for('admin_login'))
     
     return render_template('create_code.html', email=email)
@@ -122,22 +122,22 @@ def create_security_code():
 def verify_security_code():
     email = request.args.get('email')
     if not email or email not in ALLOWED_ADMINS:
-        flash('کچھ غلط ہو گیا ہے', 'error')
+        flash('Something went wrong.', 'error')
         return redirect(url_for('admin_login'))
         
     admin = mongo.db.admins.find_one({'email': email})
     if not admin or not admin.get('security_code_hash'):
-        flash('ایسا لگتا ہے کہ آپ یہاں پہلی بار آئے ہیں۔ براہ کرم اپنے لیے ایک تحفہ بنائیں', 'error')
+        flash('It seems you are here for the first time. Please create a code.', 'error')
         return redirect(url_for('create_security_code', email=email))
         
     if request.method == 'POST':
         code = request.form.get('code', '').strip()
         if check_password_hash(admin['security_code_hash'], code):
             send_verification_email(email)
-            flash('آپ کا تحفہ آپ کے مطلوبہ پتے پر بھیج دیا گیا ہے۔', 'success')
+            flash('Your gift has been sent to your desired address.', 'success')
             return redirect(url_for('admin_login'))
         else:
-            flash('نہیں بھائی، یہ میں نے آپ کو نہیں بھیجا ہے۔', 'error')
+            flash('This code is not correct. Please try again.', 'error')
     
     return render_template('verify_code.html', email=email)
 
@@ -146,7 +146,7 @@ def verify_token(token):
     try:
         email = serializer.loads(token, salt='email-verification', max_age=300)
     except:
-        flash('کچھ غلط ہو گیا', 'error')
+        flash('Something went wrong.', 'error')
         return redirect(url_for('admin_login'))
         
     session['admin_authenticated'] = True
@@ -157,7 +157,7 @@ def verify_token(token):
 def admin_logout():
     session.pop('admin_authenticated', None)
     session.pop('admin_email', None)
-    flash('اللہ آپ کو سلامت رکھے بھائی جان', 'success')
+    flash('Stay safe. You have logged out successfully.', 'success')
     return redirect(url_for('admin_login'))
 
 # Protect admin routes
@@ -650,4 +650,4 @@ def send_verification_email(email):
     mail.send(msg)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)
