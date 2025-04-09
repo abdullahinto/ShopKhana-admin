@@ -15,6 +15,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
 
+
+print("==== Flask app is being loaded ====")
+
+
+
+
 app = Flask(__name__)
 
 # MongoDB Configuration
@@ -27,9 +33,11 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/shop
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
 app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
 app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true'
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', 'Muhammad Abdullah')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD', 'secretskadminbro')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', 'printabdullah285@gmail.com')
+app.config['DEBUG'] = False
+
 
 
 # Initialize Mail
@@ -651,5 +659,15 @@ def send_verification_email(email):
     msg.body = f'Click this link to verify your account (expires in 5 minutes):\n\n{verification_link}'
     mail.send(msg)
 
+
+# Expose the WSGI callable for Elastic Beanstalk / gunicorn
+application = app    
+
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
+
+
+
