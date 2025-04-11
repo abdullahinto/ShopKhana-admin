@@ -21,7 +21,8 @@ print("==== Flask app is being loaded ====")
 
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
+
 
 # MongoDB Configuration
 app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/shopkhana")
@@ -661,7 +662,6 @@ def send_verification_email(email):
 
 
 # Expose the WSGI callable for Elastic Beanstalk / gunicorn
-application = app    
 
 if __name__ == '__main__':
     import os
