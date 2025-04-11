@@ -21,7 +21,7 @@ print("==== Flask app is being loaded ====")
 
 
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+app = Flask(__name__)
 
 
 # MongoDB Configuration
