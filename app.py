@@ -13,6 +13,7 @@ from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+from dotenv import load_dotenv
 
 
 
@@ -27,6 +28,10 @@ app = Flask(__name__)
 # MongoDB Configuration
 app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/shopkhana")
 mongo = PyMongo(app)
+
+
+# Load environment variables from .env file
+load_dotenv()
 
 # After load_dotenv()
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or 'temp_fallback_key'
@@ -49,8 +54,6 @@ serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 ALLOWED_ADMINS = {'contact.mrnow285@gmail.com', 'm.akashabunkers99@gmail.com'}
 
 
-from dotenv import load_dotenv
-load_dotenv()  # Loads variables from .env into os.environ
 
 
 # Configure Cloudinary credentials (set these as environment variables or directly)
