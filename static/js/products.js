@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const promotionFilter = document.getElementById("sk-prod-promotion-filter");
   const brandFilter = document.getElementById("sk-prod-brand-filter");
 
+  // Progress UI Elements
+  const uploadProgress = document.getElementById("uploadProgress");
+  const uploadMessage = document.getElementById("uploadMessage");
+
   // Fetch dropdowns for category (for modal) & filter (for table)
   fetchCategoriesForDropdown();
   fetchCategoriesForDropdownFilter();
@@ -80,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function fetchBrandsForDropdownFilter() {
-    // Use all fetched products to derive unique brand names
     const dropdown = document.getElementById("sk-prod-brand-filter");
     dropdown.innerHTML = '<option value="">All Brands</option>';
     const brandSet = new Set();
@@ -254,20 +257,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const prodTitle = document.getElementById("sk-prod-title");
   const prodDescription = document.getElementById("sk-prod-description");
   const prodOrigPrice = document.getElementById("sk-prod-original-price");
-  const prodDiscountPercent = document.getElementById(
-    "sk-prod-discount-percent"
-  );
-  const prodDiscountedPrice = document.getElementById(
-    "sk-prod-discounted-price"
-  );
+  const prodDiscountPercent = document.getElementById("sk-prod-discount-percent");
+  const prodDiscountedPrice = document.getElementById("sk-prod-discounted-price");
   const prodColorsInput = document.getElementById("sk-prod-colors-input");
   const prodColorsTags = document.getElementById("sk-prod-colors-tags");
-  const prodAdditionalInfoInput = document.getElementById(
-    "sk-prod-additional-info-input"
-  );
-  const prodAdditionalInfoTags = document.getElementById(
-    "sk-prod-additional-info-tags"
-  );
+  const prodAdditionalInfoInput = document.getElementById("sk-prod-additional-info-input");
+  const prodAdditionalInfoTags = document.getElementById("sk-prod-additional-info-tags");
   const prodCategory = document.getElementById("sk-prod-category");
   const prodPromotion = document.getElementById("sk-prod-promotion");
   const prodBrand = document.getElementById("sk-prod-brand");
@@ -285,11 +280,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateDiscountedPrice() {
     const orig = parseFloat(prodOrigPrice.value);
     let discount = parseFloat(prodDiscountPercent.value);
-    // If discount is not provided, default to 0
     if (isNaN(discount)) discount = 0;
     if (!isNaN(orig)) {
       const discounted = orig * (1 - discount / 100);
-      // If a discount is applied, round off the discounted price, otherwise use original price
       prodDiscountedPrice.value = discount > 0 ? Math.round(discounted) : orig;
     } else {
       prodDiscountedPrice.value = "";
@@ -349,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodAdditionalInfoTags.appendChild(tag);
   }
 
-  // Image Upload Preview (temporary preview using Blob URLs)
+  // Image Upload Preview
   prodImagesInput.addEventListener("change", () => {
     prodImagesPreview.innerHTML = "";
     const files = Array.from(prodImagesInput.files);
@@ -364,25 +357,98 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Function to upload images and return permanent URLs
-  function uploadImages(files) {
-    const uploadPromises = files.map((file) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      return fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => data.url)
-        .catch((err) => {
-          console.error("Error uploading file:", err);
-          return null;
-        });
+  /*******************
+   * Image Processing and Upload Functions
+   *******************/
+
+  // Process an image: reduce size to 80% and convert to WebP format (quality set to 0.8)
+  function processImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          // Create canvas with scaled dimensions
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width * 0.8;
+          canvas.height = img.height * 0.8;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                // Create a new File object in WebP format
+                const newFile = new File(
+                  [blob],
+                  file.name.replace(/\.[^.]+$/, ".webp"),
+                  { type: "image/webp" }
+                );
+                resolve(newFile);
+              } else {
+                reject(new Error("Image processing failed."));
+              }
+            },
+            "image/webp",
+            0.8
+          );
+        };
+        img.onerror = (err) => reject(err);
+        img.src = event.target.result;
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
     });
-    return Promise.all(uploadPromises).then((urls) =>
-      urls.filter((url) => url)
-    );
+  }
+
+  // Upload images one-by-one while updating progress UI
+  function uploadImages(files) {
+    let uploadedUrls = [];
+    let currentIndex = 0;
+
+    // Reset progress UI
+    uploadProgress.style.width = "0%";
+    uploadMessage.textContent = "Starting image processing and upload...";
+
+    function uploadNext() {
+      if (currentIndex >= files.length) {
+        return Promise.resolve(uploadedUrls);
+      }
+
+      // Process current file
+      const file = files[currentIndex];
+      uploadMessage.textContent = `Processing image ${currentIndex + 1} of ${files.length}...`;
+      return processImage(file)
+        .then((processedFile) => {
+          uploadMessage.textContent = `Uploading image ${currentIndex + 1} of ${files.length}...`;
+          const formData = new FormData();
+          formData.append("file", processedFile);
+          return fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.url) {
+            uploadedUrls.push(data.url);
+          }
+          currentIndex++;
+          // Update progress bar
+          const progressPercent = Math.round((currentIndex / files.length) * 100);
+          uploadProgress.style.width = progressPercent + "%";
+          // Process next file
+          return uploadNext();
+        })
+        .catch((err) => {
+          console.error("Error processing/uploading file:", err);
+          currentIndex++;
+          return uploadNext();
+        });
+    }
+    return uploadNext().then(() => {
+      uploadMessage.textContent = "All images uploaded successfully.";
+      return uploadedUrls;
+    });
   }
 
   prodForm.addEventListener("submit", (e) => {
@@ -412,7 +478,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : Promise.resolve(currentImageURLs);
 
     uploadPromise.then((imageUrls) => {
-      // If editing and no new images were uploaded, use previously stored URLs.
       if (currentEditId && !files.length && currentImageURLs.length) {
         imageUrls = currentImageURLs;
       }
@@ -420,7 +485,9 @@ document.addEventListener("DOMContentLoaded", () => {
         title: prodTitle.value,
         description: prodDescription.value,
         originalPrice: parseFloat(prodOrigPrice.value),
-        discountPercent: isNaN(parseFloat(prodDiscountPercent.value)) ? 0 : parseFloat(prodDiscountPercent.value),
+        discountPercent: isNaN(parseFloat(prodDiscountPercent.value))
+          ? 0
+          : parseFloat(prodDiscountPercent.value),
         discountedPrice: parseFloat(prodDiscountedPrice.value),
         colors: colorTags,
         additionalInfo: additionalInfoTags,
@@ -440,7 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sk_prod_all_products = sk_prod_all_products.map((p) =>
               p._id === currentEditId ? updatedProduct : p
             );
-            fetchProducts(); // Refresh products from backend
+            fetchProducts();
             closeProductModal();
           });
       } else {
@@ -452,7 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then((response) => response.json())
           .then((newProduct) => {
             sk_prod_all_products.push(newProduct);
-            fetchProducts(); // Refresh products from backend
+            fetchProducts();
             closeProductModal();
           });
       }
@@ -486,7 +553,6 @@ document.addEventListener("DOMContentLoaded", () => {
       prodPromotion.value = product.promotionCategory;
       prodBrand.value = product.brandName;
       prodImagesPreview.innerHTML = "";
-      // Preserve existing images if any
       currentImageURLs = product.images || [];
       currentImageURLs.forEach((imgUrl) => {
         const img = document.createElement("img");
@@ -559,9 +625,7 @@ document.addEventListener("DOMContentLoaded", () => {
     imgPopup.style.display = "none";
   });
 
-  /*******************
-   * Search & Filter Functionality
-   *******************/
+  // Reapply filters if needed
   function applyFilters() {
     const searchQuery = searchInput.value.trim().toLowerCase();
     const categoryValue = categoryFilter.value;

@@ -2,6 +2,25 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+<style>
+    /* Basic progress bar style */
+    #upload-container {
+        margin-top: 10px;
+    }
+
+    #uploadProgress {
+        width: 0%;
+        height: 5px;
+        background: green;
+        transition: width 0.3s ease;
+    }
+
+    #uploadMessage {
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #555;
+    }
+</style>
 {% endblock extra_css %}
 
 {% block extra_js %}
@@ -65,9 +84,7 @@
                 </tr>
             </thead>
             <tbody id="sk-prod-table-body">
-                <!-- Product rows will be rendered via JS.
-                     Example for rendering images:
-                -->
+                <!-- Product rows will be rendered via JS -->
             </tbody>
         </table>
     </div>
@@ -95,8 +112,8 @@
                 <div class="sk-prod-form-group">
                     <label for="sk-prod-discount-percent">Discount Percent (Optional)</label>
                     <input type="number" id="sk-prod-discount-percent">
-                  </div>
-                  
+                </div>
+
                 <div class="sk-prod-form-group">
                     <label for="sk-prod-discounted-price">Discounted Price</label>
                     <input type="number" id="sk-prod-discounted-price" readonly>
@@ -142,10 +159,11 @@
                 <div class="sk-prod-form-group sk-prod-full">
                     <label for="sk-prod-images">Product Images</label>
                     <input type="file" id="sk-prod-images" accept="image/*" multiple>
-                    <div id="sk-prod-images-preview" class="sk-prod-images-preview">
-                        <!-- Uploaded image previews will be displayed here.
-                             Example (to be generated via JS upon upload):
-                        -->
+                    <div id="sk-prod-images-preview" class="sk-prod-images-preview"></div>
+                    <!-- New Progress UI -->
+                    <div id="upload-container">
+                        <div id="uploadProgress"></div>
+                        <div id="uploadMessage"></div>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,7 @@ print("==== Flask app is being loaded ====")
 
 app = Flask(__name__)
 
+load_dotenv()
 
 # MongoDB Configuration
 app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/shopkhana")
@@ -31,7 +32,7 @@ mongo = PyMongo(app)
 
 
 # Load environment variables from .env file
-load_dotenv()
+
 
 # After load_dotenv()
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or 'temp_fallback_key'

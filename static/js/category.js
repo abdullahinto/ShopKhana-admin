@@ -16,9 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("New Category button not found!");
     return;
   }
-
   newCategoryBtn.addEventListener("click", () => {
-    console.log("New Category button clicked");
     openCategoryModal("new");
   });
 
@@ -29,6 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const catTitle = document.getElementById("sk-cat-title");
   const catImagesInput = document.getElementById("sk-cat-images");
   const catImagesPreview = document.getElementById("sk-cat-images-preview");
+
+  // Progress UI Elements for category upload
+  const catUploadProgress = document.getElementById("cat-uploadProgress");
+  const catUploadMessage = document.getElementById("cat-uploadMessage");
 
   let currentCatEditId = null;
 
@@ -173,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentCatEditId = category._id;
       catTitle.value = category.name;
       catImagesPreview.innerHTML = "";
-      // Store existing image URLs so that they persist if no new image is uploaded
+      // Preserve existing image URLs if available
       currentCatImageURLs = category.images || [];
       currentCatImageURLs.forEach((imgUrl) => {
         const img = document.createElement("img");
@@ -186,31 +188,104 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeCategoryModal() {
     catModal.style.display = "none";
   }
-
   catModalClose.addEventListener("click", closeCategoryModal);
+
+  /*******************
+   * Image Processing and Upload Functions for Category
+   *******************/
+
+  // Process an image by scaling it to 80% and converting to WebP format (quality 0.8)
+  function processImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width * 0.8;
+          canvas.height = img.height * 0.8;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const newFile = new File(
+                  [blob],
+                  file.name.replace(/\.[^.]+$/, ".webp"),
+                  { type: "image/webp" }
+                );
+                resolve(newFile);
+              } else {
+                reject(new Error("Image processing failed."));
+              }
+            },
+            "image/webp",
+            0.8
+          );
+        };
+        img.onerror = (err) => reject(err);
+        img.src = event.target.result;
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Upload images one-by-one with progress updates
+  async function uploadImages(files) {
+    let uploadedUrls = [];
+    let currentIndex = 0;
+    // Reset progress UI
+    catUploadProgress.style.width = "0%";
+    catUploadMessage.textContent = "Starting image processing and upload...";
+    while (currentIndex < files.length) {
+      catUploadMessage.textContent = `Processing image ${currentIndex + 1} of ${
+        files.length
+      }...`;
+      try {
+        const processedFile = await processImage(files[currentIndex]);
+        catUploadMessage.textContent = `Uploading image ${
+          currentIndex + 1
+        } of ${files.length}...`;
+        const formData = new FormData();
+        formData.append("file", processedFile);
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        if (data.url) {
+          uploadedUrls.push(data.url);
+        }
+      } catch (err) {
+        console.error("Error processing/uploading file:", err);
+      }
+      currentIndex++;
+      let progressPercent = Math.round((currentIndex / files.length) * 100);
+      catUploadProgress.style.width = progressPercent + "%";
+    }
+    catUploadMessage.textContent = "All images uploaded successfully.";
+    return uploadedUrls;
+  }
+
+  // Listen for changes on the file input to show preview images immediately
+  catImagesInput.addEventListener("change", () => {
+    catImagesPreview.innerHTML = "";
+    const files = Array.from(catImagesInput.files);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        catImagesPreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  });
 
   /*******************
    * Upload Images and Submit Category
    *******************/
-  async function uploadImages(files) {
-    const uploadPromises = files.map((file) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      return fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => data.url)
-        .catch((err) => {
-          console.error("Error uploading file:", err);
-          return null;
-        });
-    });
-    const urls = await Promise.all(uploadPromises);
-    return urls.filter((url) => url);
-  }
-
   catForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!catTitle.value) {
@@ -218,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const files = Array.from(catImagesInput.files);
-    // If new files are uploaded, use them; otherwise, if editing, use the stored images.
     let imageUrls;
     if (files.length > 0) {
       imageUrls = await uploadImages(files);

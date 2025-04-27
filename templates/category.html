@@ -2,6 +2,25 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/category.css') }}">
+<style>
+    /* Basic styling for progress bar and messages */
+    #cat-upload-container {
+        margin-top: 10px;
+    }
+
+    #cat-uploadProgress {
+        width: 0%;
+        height: 5px;
+        background: green;
+        transition: width 0.3s ease;
+    }
+
+    #cat-uploadMessage {
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #555;
+    }
+</style>
 {% endblock extra_css %}
 
 {% block extra_js %}
@@ -11,9 +30,6 @@
 {% block title %}Category Management - ShopKhana{% endblock title %}
 
 {% block body %}
-
-
-
 
 <!-- Header -->
 <header class="sk-cat-header">
@@ -54,9 +70,9 @@
         </table>
     </div>
     <!-- Pagination (if needed) -->
- <div class="sk-cat-pagination" id="sk-cat-pagination">
+    <div class="sk-cat-pagination" id="sk-cat-pagination">
         <!-- Pagination controls go here -->
-    </div>   
+    </div>
 </section>
 
 <!-- Category Input Modal -->
@@ -74,6 +90,11 @@
                     <label for="sk-cat-images">Category Images</label>
                     <input type="file" id="sk-cat-images" accept="image/*" multiple>
                     <div id="sk-cat-images-preview" class="sk-cat-images-preview"></div>
+                    <!-- New Progress UI for Category Image Upload -->
+                    <div id="cat-upload-container">
+                        <div id="cat-uploadProgress"></div>
+                        <div id="cat-uploadMessage"></div>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="sk-cat-btn sk-cat-submit-btn">Submit</button>
@@ -88,7 +109,5 @@
         <div id="sk-cat-img-popup-gallery" class="sk-cat-img-popup-gallery"></div>
     </div>
 </div>
-
-
 
 {% endblock body %}

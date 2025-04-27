@@ -2,6 +2,23 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/banners.css') }}">
+<style>
+  /* Progress UI for banner image upload */
+  #ban-upload-container {
+    margin-top: 10px;
+  }
+  #ban-uploadProgress {
+    width: 0%;
+    height: 5px;
+    background: green;
+    transition: width 0.3s ease;
+  }
+  #ban-uploadMessage {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #555;
+  }
+</style>
 {% endblock extra_css %}
 
 {% block extra_js %}
@@ -105,6 +122,11 @@
                              use the returned file ID to generate the preview URL:
                              window.location.origin + "/admin/uploaded_image/" + image_id
                         -->
+                    </div>
+                    <!-- Progress UI for banner image upload -->
+                    <div id="ban-upload-container">
+                      <div id="ban-uploadProgress"></div>
+                      <div id="ban-uploadMessage"></div>
                     </div>
                 </div>
             </div>
